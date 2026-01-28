@@ -26,4 +26,9 @@ public class EscalationPhaseSO : ScriptableObject
     [Range(0f, 3f)] public float audioIntensity = 1f;
     [Range(0f, 3f)] public float monsterAggression = 1f;
     [Range(0f, 3f)] public float environmentReaction = 1f;
+
+    [Header("Escalation Flags")]
+    public bool hunterAware;   // becomes true in Escalate + Chaos
+    public bool chaseActive;   // true only in Chaos
+
 }

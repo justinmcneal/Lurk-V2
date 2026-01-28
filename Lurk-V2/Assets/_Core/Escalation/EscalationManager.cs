@@ -14,7 +14,16 @@ public class EscalationManager : MonoBehaviour
 
     public event Action<EscalationPhaseSO> OnPhaseChanged;
 
+    public event Action OnHunterAware;
+
+    public event Action OnChaseStart;
+
     private float elapsedSeconds;
+    
+    private bool hunterAwareFired;
+    
+    private bool chaseStartFired;
+
 
     private void Awake()
     {
@@ -37,6 +46,11 @@ public class EscalationManager : MonoBehaviour
             enabled = false;
             return;
         }
+
+        // Reset state temporary for now
+        hunterAwareFired = false;
+        chaseStartFired = false;
+        elapsedSeconds = 0f;
 
         // Start in first phase immediately
         SetPhase(phases[0]);
@@ -92,5 +106,20 @@ public class EscalationManager : MonoBehaviour
         );
 
         OnPhaseChanged?.Invoke(CurrentPhase);
+        
+        // Fire one-time events based on flags
+        if (!hunterAwareFired && CurrentPhase.hunterAware)
+        {
+            hunterAwareFired = true;
+            Debug.Log("[ESCALATION] Hunter is aware!");
+            OnHunterAware?.Invoke();
+        }
+
+        if (!chaseStartFired && CurrentPhase.chaseActive)
+        {
+            chaseStartFired = true;
+            Debug.Log("[ESCALATION] Chase started!");
+            OnChaseStart?.Invoke();
+        }
     }
 }
