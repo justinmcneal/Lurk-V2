@@ -5,6 +5,9 @@ public class OxygenManager : MonoBehaviour
     [SerializeField] private OxygenConfig config;
 
     public float CurrentOxygen { get; private set; }
+    public float MaxOxygen { get; private set; }
+    public float OxygenPercentRemaining => MaxOxygen <= 0f ? 0f : CurrentOxygen / MaxOxygen;
+
     public int TanksCollected { get; private set; }
 
     private void Start()
@@ -17,6 +20,7 @@ public class OxygenManager : MonoBehaviour
         }
 
         CurrentOxygen = config.startOxygenSeconds;
+        MaxOxygen = config.startOxygenSeconds;
         TanksCollected = 0;
 
         Debug.Log($"[OXYGEN] Start: {CurrentOxygen:0}s | Quota: {config.quotaTanksRequired} tanks");

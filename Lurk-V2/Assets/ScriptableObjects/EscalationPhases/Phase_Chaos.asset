@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 395ef5ca5c08548dcba1712d5f47bda0, type: 3}
+  m_Name: Phase_Chaos
+  m_EditorClassIdentifier: 
+  phaseName: Chaos
+  description: 
+  triggerType: 0
+  activateAtOrBelow: 0.33
+  activateAfterSeconds: 0
+  audioIntensity: 2
+  monsterAggression: 1.3
+  environmentReaction: 2
