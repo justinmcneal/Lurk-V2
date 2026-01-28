@@ -545,10 +545,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ece8b2d26b3a4952a8bd53a52cb3c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  escalation: {fileID: 0}
-  motor: {fileID: 0}
-  voice: {fileID: 0}
-  player: {fileID: 0}
+  escalation: {fileID: 184687246}
+  motor: {fileID: 679813763}
+  voice: {fileID: 1096023241}
+  player: {fileID: 209955419}
   minIntensityToReact: 0.2
   useNoiseRadius: 1
   arriveDistance: 1.2
