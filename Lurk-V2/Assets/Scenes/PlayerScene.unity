@@ -985,10 +985,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   voiceSource: {fileID: 0}
-  awareTaunts: []
-  chaseTaunts: []
-  chargeScreams: []
-  closeGrowls: []
+  awareTaunts:
+  - {fileID: 8300000, guid: 0ede18a21ec404d0b8441406da012265, type: 3}
+  chaseTaunts:
+  - {fileID: 8300000, guid: ba4cdcd6c0a1946ecb7cecebe6c3ce17, type: 3}
+  chargeScreams:
+  - {fileID: 8300000, guid: 425ea7f5e9f9b4e01a6f04254acd17db, type: 3}
+  closeGrowls:
+  - {fileID: 8300000, guid: 342c2d7b1b5af4e6eb91a2275ceab44c, type: 3}
   tauntVolume: 0.7
   screamVolume: 0.9
   growlVolume: 0.7
