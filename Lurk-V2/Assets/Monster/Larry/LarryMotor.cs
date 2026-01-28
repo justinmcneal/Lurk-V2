@@ -9,7 +9,8 @@ public class LarryMotor : MonoBehaviour
     [Header("Turn")]
     public float turnSpeed = 360f; // degrees/sec
 
-    public void MoveTowards(Vector3 target, bool hunting)
+    // speedMultiplier lets Charge move faster without changing huntSpeed permanently
+    public void MoveTowards(Vector3 target, bool hunting, float speedMultiplier = 1f)
     {
         Vector3 to = target - transform.position;
         to.y = 0f;
@@ -22,7 +23,9 @@ public class LarryMotor : MonoBehaviour
         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
 
         // Move forward
-        float speed = hunting ? huntSpeed : investigateSpeed;
+        float baseSpeed = hunting ? huntSpeed : investigateSpeed;
+        float speed = baseSpeed * speedMultiplier;
+
         transform.position += transform.forward * (speed * Time.deltaTime);
     }
 }
