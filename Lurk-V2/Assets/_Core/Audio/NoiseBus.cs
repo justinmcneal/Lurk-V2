@@ -26,6 +26,10 @@ public static class NoiseBus
         var e = new NoiseEvent(position, radius, intensity, source);
         OnNoiseEmitted?.Invoke(e);
 
+        // Scene view marker (short white line)
+        Debug.DrawRay(position, Vector3.up * 2f, Color.white, 0.25f);
+
         Debug.Log($"[NOISE] {source} | radius={radius:0.0} | intensity={intensity:0.00} | pos={position}");
     }
+
 }
