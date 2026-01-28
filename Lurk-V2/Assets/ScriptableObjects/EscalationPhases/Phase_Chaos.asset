@@ -20,3 +20,5 @@ MonoBehaviour:
   audioIntensity: 2
   monsterAggression: 1.3
   environmentReaction: 2
+  hunterAware: 1
+  chaseActive: 1

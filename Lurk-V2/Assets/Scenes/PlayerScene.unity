@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 209955419}
   - component: {fileID: 209955418}
   - component: {fileID: 209955417}
+  - component: {fileID: 209955420}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -244,6 +245,29 @@ Transform:
   - {fileID: 293170945}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &209955420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209955416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52f90aed26e24a4698844ded25d9d2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stepIntervalWalk: 0.55
+  stepIntervalSprint: 0.35
+  walkRadius: 12
+  sprintRadius: 25
+  jumpRadius: 18
+  grabRadius: 10
+  walkIntensity: 0.4
+  sprintIntensity: 0.9
+  jumpIntensity: 0.7
+  grabIntensity: 0.35
+  minMoveSpeedForSteps: 0.2
 --- !u!1 &293170944
 GameObject:
   m_ObjectHideFlags: 0
