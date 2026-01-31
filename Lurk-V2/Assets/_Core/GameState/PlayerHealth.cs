@@ -1,16 +1,15 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public bool IsDead { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    public void Kill(string reason = "Killed")
     {
-        
+        if (IsDead) return;
+        IsDead = true;
+        Debug.Log($"[RUN] Player died: {reason}");
+        FindFirstObjectByType<RunStateManager>()?.OnPlayerDied();
     }
 }

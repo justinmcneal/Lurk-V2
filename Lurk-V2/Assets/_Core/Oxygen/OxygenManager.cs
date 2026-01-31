@@ -10,6 +10,10 @@ public class OxygenManager : MonoBehaviour
 
     public int TanksCollected { get; private set; }
 
+    // ✅ ADD THESE
+    public int QuotaTanksRequired => config != null ? config.quotaTanksRequired : 0;
+    public bool QuotaMet => config != null && TanksCollected >= config.quotaTanksRequired;
+
     private void Start()
     {
         if (config == null)
@@ -32,7 +36,10 @@ public class OxygenManager : MonoBehaviour
         if (CurrentOxygen <= 0f)
         {
             CurrentOxygen = 0f;
-            Debug.Log("[OXYGEN] Depleted -> DEAD (for now just log)");
+
+            Debug.Log("[OXYGEN] Depleted -> DEAD");
+            FindFirstObjectByType<RunStateManager>()?.OnPlayerDied();
+
             enabled = false; // stop draining
         }
     }
@@ -40,14 +47,13 @@ public class OxygenManager : MonoBehaviour
     public void AddTank()
     {
         TanksCollected++;
-
         CurrentOxygen = Mathf.Min(CurrentOxygen + config.tankAddSeconds, config.maxOxygenSeconds);
 
         Debug.Log($"[OXYGEN] Tank picked! Tanks: {TanksCollected}/{config.quotaTanksRequired} | Oxygen: {CurrentOxygen:0}s");
 
-        if (TanksCollected >= config.quotaTanksRequired)
+        if (QuotaMet)
         {
-            Debug.Log("[OXYGEN] Quota met! (Later: terminal submit / win screen)");
+            Debug.Log("[OXYGEN] Quota met! Go to Terminal to submit.");
         }
     }
 }
