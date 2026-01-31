@@ -1,9 +1,9 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TerminalInteract : MonoBehaviour
 {
     [SerializeField] private OxygenManager oxygen;
-    [SerializeField] private KeyCode interactKey = KeyCode.E;
 
     private bool playerInside;
 
@@ -16,9 +16,10 @@ public class TerminalInteract : MonoBehaviour
     private void Update()
     {
         if (!playerInside) return;
-        if (Input.GetKeyDown(interactKey))
+
+        if (Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
         {
-            if (oxygen != null && oxygen.OxygenPercentRemaining > 0f && oxygen.QuotaMet)
+            if (oxygen != null && oxygen.QuotaMet)
             {
                 Debug.Log("[RUN] Terminal used: QUOTA MET -> WIN");
                 FindFirstObjectByType<RunStateManager>()?.OnPlayerWon();
