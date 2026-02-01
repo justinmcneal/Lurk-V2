@@ -6,7 +6,8 @@ public class QuotaUI : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TextMeshProUGUI quotaText;
-    [SerializeField] private Image tankIcon; // Optional: tank sprite next to text
+    [SerializeField] private Image tankIcon; // Optional: tank outline sprite
+    [SerializeField] private Image tankFill; // Optional: tank fill sprite that changes with progress
 
     [Header("Settings")]
     [SerializeField] private Color normalColor = Color.white;
@@ -42,10 +43,18 @@ public class QuotaUI : MonoBehaviour
             quotaText.color = quotaMet ? completedColor : normalColor;
         }
 
-        // Update tank icon - full opacity when quota met, partial otherwise
+        // Update tank outline - full opacity when quota met, partial otherwise
         if (tankIcon != null)
         {
             tankIcon.color = quotaMet ? completedColor : normalColor;
+        }
+
+        // Update tank fill - fill amount based on collection progress
+        if (tankFill != null)
+        {
+            float fillPercent = required > 0 ? (float)collected / required : 0f;
+            tankFill.fillAmount = fillPercent;
+            tankFill.color = quotaMet ? completedColor : normalColor;
         }
     }
 }
