@@ -4868,6 +4868,38 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: chaseTaunts.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: chargeScreams.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: 'awareTaunts.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ba4cdcd6c0a1946ecb7cecebe6c3ce17, type: 3}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: 'chaseTaunts.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0ede18a21ec404d0b8441406da012265, type: 3}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: 'chargeScreams.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ab80a4e6069be46fe8999ecb06eb08ff, type: 3}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: investigateSounds.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: 'investigateSounds.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 314b6792d531843ff8e3a6843a9c678f, type: 3}
+    - target: {fileID: 7849321616946995019, guid: 2758d2fc2ea064e13b6535b27708c67a, type: 3}
+      propertyPath: 'investigateSounds.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3ca90ce92cfcd455e8090904951b97db, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

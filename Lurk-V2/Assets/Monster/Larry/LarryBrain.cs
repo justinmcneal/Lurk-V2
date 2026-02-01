@@ -45,6 +45,17 @@ public class LarryBrain : MonoBehaviour
     [SerializeField] private float closeGrowlDistance = 3.2f;
     [SerializeField] private float closeGrowlCooldown = 2.5f;
 
+    [Header("Phase 2 - Investigate Behavior")]
+    [SerializeField] private float investigateSoundIntervalMin = 8f;
+    [SerializeField] private float investigateSoundIntervalMax = 15f;
+    [SerializeField] private float investigatePauseChance = 0.3f; // 30% chance to pause
+    [SerializeField] private float investigatePauseDuration = 2f;
+
+    [Header("Phase 3 - Hunt Behavior")]
+    [SerializeField] private float huntTauntIntervalMin = 4f;
+    [SerializeField] private float huntTauntIntervalMax = 8f;
+    [SerializeField] private float aggressiveGrowlDistance = 5f;
+
     private LarryState state = LarryState.Disabled;
 
     private Vector3 lastHeardPos;
@@ -56,6 +67,9 @@ public class LarryBrain : MonoBehaviour
 
     private float nextTauntTime;
     private float nextCloseGrowlTime;
+    private float nextInvestigateSoundTime;
+    private float investigatePauseEndTime;
+    private bool isPaused;
 
     private void Awake()
     {
@@ -135,37 +149,56 @@ public class LarryBrain : MonoBehaviour
             return;
         }
 
-        // Phase 3 extra behavior
+        // ============ PHASE 2 - INVESTIGATE BEHAVIOR ============
+        if (state == LarryState.Investigate)
+        {
+            UpdateInvestigateBehavior();
+            return;
+        }
+
+        // ============ PHASE 3 - HUNT BEHAVIOR ============
         if (state == LarryState.Hunt && player != null)
         {
-            float distToPlayer = Vector3.Distance(transform.position, player.position);
+            UpdateHuntBehavior();
+        }
+    }
 
-            // Close growl
-            if (distToPlayer <= closeGrowlDistance && Time.time >= nextCloseGrowlTime)
+    private void UpdateInvestigateBehavior()
+    {
+        // Check for random pause (creepy hesitation)
+        if (isPaused)
+        {
+            if (Time.time >= investigatePauseEndTime)
             {
-                nextCloseGrowlTime = Time.time + closeGrowlCooldown;
-                voice?.PlayCloseGrowl();
+                isPaused = false;
             }
-
-            // Periodic taunts
-            if (Time.time >= nextTauntTime)
+            else
             {
-                ScheduleNextTaunt();
-                voice?.PlayChaseTaunt();
-            }
-
-            // Charge trigger
-            if (Time.time >= nextChargeAllowedTime && distToPlayer <= chargeTriggerDistance)
-            {
-                StartCharge(player.position);
+                // Just stand there menacingly
                 return;
             }
         }
 
-        // Move toward last heard position if we have a target
+        // Random chance to pause mid-movement (creepy)
+        if (hasHeardAnything && Random.value < investigatePauseChance * Time.deltaTime)
+        {
+            isPaused = true;
+            investigatePauseEndTime = Time.time + investigatePauseDuration;
+            Debug.Log("[LARRY] *pauses and listens*");
+            return;
+        }
+
+        // Occasional eerie sounds during investigation
+        if (Time.time >= nextInvestigateSoundTime)
+        {
+            ScheduleNextInvestigateSound();
+            voice?.PlayInvestigateSound();
+        }
+
+        // Move toward last heard position (slower, methodical)
         if (hasHeardAnything)
         {
-            motor.MoveTowards(lastHeardPos, hunting: state == LarryState.Hunt);
+            motor.MoveTowards(lastHeardPos, hunting: false);
 
             float dist = Vector3.Distance(
                 new Vector3(transform.position.x, 0f, transform.position.z),
@@ -174,7 +207,58 @@ public class LarryBrain : MonoBehaviour
 
             if (dist <= arriveDistance)
             {
-                // reached sound point -> hold; keep memory until it expires
+                // Reached sound point -> wait and listen
+            }
+        }
+    }
+
+    private void UpdateHuntBehavior()
+    {
+        float distToPlayer = Vector3.Distance(transform.position, player.position);
+
+        // Close growl - more frequent in Phase 3
+        if (distToPlayer <= closeGrowlDistance && Time.time >= nextCloseGrowlTime)
+        {
+            nextCloseGrowlTime = Time.time + closeGrowlCooldown;
+            voice?.PlayCloseGrowl();
+        }
+        // Aggressive growl at medium range
+        else if (distToPlayer <= aggressiveGrowlDistance && distToPlayer > closeGrowlDistance)
+        {
+            if (Time.time >= nextCloseGrowlTime)
+            {
+                nextCloseGrowlTime = Time.time + closeGrowlCooldown * 1.5f; // Slightly longer cooldown
+                voice?.PlayCloseGrowl();
+            }
+        }
+
+        // More frequent taunts during hunt
+        if (Time.time >= nextTauntTime)
+        {
+            ScheduleNextTaunt();
+            voice?.PlayChaseTaunt();
+        }
+
+        // Charge trigger
+        if (Time.time >= nextChargeAllowedTime && distToPlayer <= chargeTriggerDistance)
+        {
+            StartCharge(player.position);
+            return;
+        }
+
+        // Move toward last heard position
+        if (hasHeardAnything)
+        {
+            motor.MoveTowards(lastHeardPos, hunting: true);
+
+            float dist = Vector3.Distance(
+                new Vector3(transform.position.x, 0f, transform.position.z),
+                new Vector3(lastHeardPos.x, 0f, lastHeardPos.z)
+            );
+
+            if (dist <= arriveDistance)
+            {
+                // Reached sound point -> hold
             }
         }
     }
@@ -248,11 +332,21 @@ public class LarryBrain : MonoBehaviour
             hasHeardAnything = false;
             nextTauntTime = 0f;
             nextCloseGrowlTime = 0f;
+            nextInvestigateSoundTime = 0f;
+            isPaused = false;
+            voice?.StopAllSounds();
+        }
+
+        if (state == LarryState.Investigate)
+        {
+            ScheduleNextInvestigateSound();
+            isPaused = false;
         }
 
         if (state == LarryState.Hunt)
         {
             ScheduleNextTaunt();
+            isPaused = false;
         }
 
         Debug.Log($"[LARRY] State -> {state}");
@@ -277,6 +371,19 @@ public class LarryBrain : MonoBehaviour
 
     private void ScheduleNextTaunt()
     {
-        nextTauntTime = Time.time + Random.Range(tauntIntervalMin, tauntIntervalMax);
+        // Use shorter intervals in Hunt mode
+        if (state == LarryState.Hunt)
+        {
+            nextTauntTime = Time.time + Random.Range(huntTauntIntervalMin, huntTauntIntervalMax);
+        }
+        else
+        {
+            nextTauntTime = Time.time + Random.Range(tauntIntervalMin, tauntIntervalMax);
+        }
+    }
+
+    private void ScheduleNextInvestigateSound()
+    {
+        nextInvestigateSoundTime = Time.time + Random.Range(investigateSoundIntervalMin, investigateSoundIntervalMax);
     }
 }
