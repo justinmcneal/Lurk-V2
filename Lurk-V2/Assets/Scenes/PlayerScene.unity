@@ -804,6 +804,7 @@ GameObject:
   - component: {fileID: 679813759}
   - component: {fileID: 679813764}
   - component: {fileID: 679813763}
+  - component: {fileID: 679813765}
   m_Layer: 0
   m_Name: Larry
   m_TagString: Untagged
@@ -826,7 +827,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -948,6 +949,18 @@ MonoBehaviour:
   tauntIntervalMax: 11
   closeGrowlDistance: 3.2
   closeGrowlCooldown: 2.5
+--- !u!114 &679813765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679813758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d73c77ba7bb23468d90b3c4e5b36a21f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1523,7 +1536,6 @@ GameObject:
   - component: {fileID: 1256198203}
   - component: {fileID: 1256198202}
   - component: {fileID: 1256198201}
-  - component: {fileID: 1256198200}
   m_Layer: 0
   m_Name: Terminal
   m_TagString: Untagged
@@ -1531,18 +1543,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1256198200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1256198199}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d73c77ba7bb23468d90b3c4e5b36a21f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1256198201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,6 +1652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1394585030}
   - component: {fileID: 1394585031}
+  - component: {fileID: 1394585032}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -1698,6 +1699,23 @@ MonoBehaviour:
   panicDistance: 8
   fovPanicReduction: 12
   panicFadeSpeed: 3
+--- !u!114 &1394585032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394585029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdefce626899f4f70980576b50e68788, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxStamina: 100
+  staminaDrainRate: 20
+  staminaRegenRate: 15
+  staminaRegenDelay: 1
+  minStaminaToSprint: 10
 --- !u!1 &1452756478
 GameObject:
   m_ObjectHideFlags: 0
