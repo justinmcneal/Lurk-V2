@@ -8,7 +8,7 @@ public class RunStateManager : MonoBehaviour
 
     [SerializeField] private CanvasGroup fadeCanvas; // optional
     [SerializeField] private float fadeTime = 0.6f;
-    [SerializeField] private float resetDelay = 1.0f;
+    [SerializeField] private float messageDisplayTime = 2.0f; // Time to show "You Died" / "Run Complete"
 
     public RunState State { get; private set; } = RunState.Playing;
 
@@ -30,11 +30,14 @@ public class RunStateManager : MonoBehaviour
 
     private IEnumerator EndRoutine()
     {
+        // Fade to black
         yield return Fade(1f);
-        yield return new WaitForSeconds(resetDelay);
+        
+        // Wait for message to display
+        yield return new WaitForSeconds(messageDisplayTime);
 
-        // Reset to Level 1 (same scene for now)
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // Reset to StartScene (index 0) or reload current scene
+        SceneManager.LoadScene("StartScene");
     }
 
     private IEnumerator Fade(float target)
