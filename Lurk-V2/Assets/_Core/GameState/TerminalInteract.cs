@@ -34,12 +34,18 @@ public class TerminalInteract : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInside = true;
+            PromptUI.SetNearTerminal(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
+        {
             playerInside = false;
+            PromptUI.SetNearTerminal(false);
+        }
     }
 }
